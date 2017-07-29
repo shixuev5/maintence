@@ -129,7 +129,7 @@ export default {
       }
     },
     handleSubmit() {
-      fetchServiceLog(this.filter, this.current).then((response) => {
+      fetchServiceLog(this.filter, this.current).then(response => {
         this.data = response.data.dataSource;
         this.total = response.data.pageInfo.totalCount;
         this.$Message.success('刷新成功！');
@@ -140,12 +140,12 @@ export default {
     },
     changePage(pageIndex) {
       this.current = pageIndex;
-      fetchServiceLog(this.filter, this.current).then((response) => {
+      fetchServiceLog(this.filter, this.current).then(response => {
         this.data = response.data.dataSource;
       });
     },
     changeSize(pageSize) {
-      fetchServiceLog(this.filter, this.current, pageSize).then((response) => {
+      fetchServiceLog(this.filter, this.current, pageSize).then(response => {
         this.data = response.data.dataSource;
       });
     },

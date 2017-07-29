@@ -13,13 +13,13 @@ const fetch = axios.create({
   withCredentials: false
 });
 
-fetch.interceptors.request.use((config) => {
+fetch.interceptors.request.use(config => {
   LoadingBar.start();
   if (config.description) {
     config.headers.common['User-Operation-Info'] = encodeURIComponent(`${store.getters.userId},${store.getters.token},${store.getters.currentPerm.id},${config.description},${store.getters.currentPerm.bpname},${store.getters.parentPerm.bpname}`);
   }
   return config;
-}, (error) => {
+}, error => {
   LoadingBar.error();
   if (error.request) {
     console.log(error.request);
@@ -29,7 +29,7 @@ fetch.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-fetch.interceptors.response.use((response) => {
+fetch.interceptors.response.use(response => {
   if (validateStatus(response.data.statusCode)) {
     response.data = response.data.data;
     LoadingBar.finish();
@@ -39,7 +39,7 @@ fetch.interceptors.response.use((response) => {
   return Promise.reject({
     message: response.data.message
   });
-}, (error) => {
+}, error => {
   LoadingBar.error();
   if (error.response) {
     Message.error(`${error.response.status} ${error.response.statusText}`);

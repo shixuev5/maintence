@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     handleLogin(name) {
-      this.$refs[name].validate((valid) => {
+      this.$refs[name].validate(valid => {
         if (valid) {
           this.$store.dispatch('loginByName', this.form).then(() => {
             this.$store.dispatch('generateRoutes');

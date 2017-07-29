@@ -165,7 +165,7 @@ export default {
           filename: '平台运行日志',
           original: false,
           columns: this.columns,
-          data: this.data.map((val) => {
+          data: this.data.map(val => {
             val.date = filters.formatDate(val.date);
             return val;
           })
@@ -173,7 +173,7 @@ export default {
       }
     },
     handleSubmit() {
-      fetchPlatformLog(this.form, this.current).then((response) => {
+      fetchPlatformLog(this.form, this.current).then(response => {
         this.data = response.data.dataSource;
         this.total = response.data.pageInfo.totalCount;
         this.$Message.success('刷新成功！');
@@ -184,12 +184,12 @@ export default {
     },
     changePage(pageIndex) {
       this.current = pageIndex;
-      fetchPlatformLog(this.form, this.current).then((response) => {
+      fetchPlatformLog(this.form, this.current).then(response => {
         this.data = response.data.dataSource;
       });
     },
     changeSize(pageSize) {
-      fetchPlatformLog(this.form, this.current, pageSize).then((response) => {
+      fetchPlatformLog(this.form, this.current, pageSize).then(response => {
         this.data = response.data.dataSource;
       });
     },
