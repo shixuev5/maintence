@@ -25,8 +25,8 @@ const user = {
   },
   actions: {
     loginByName({ commit, dispatch }, { name, password }) {
-      return new Promise((resolve) => {
-        login(name, password).then((response) => {
+      return new Promise(resolve => {
+        login(name, password).then(response => {
           // if(response.data.flag !== 1) {
           //     reject('NAMEFAILURE');
           // }else if(response.data.permtype > 1) {
@@ -43,7 +43,7 @@ const user = {
       });
     },
     logOut({ commit }) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         commit('SET_TOKEN', '');
         Cookie.remove('token', {
           path: ''

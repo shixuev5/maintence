@@ -175,7 +175,7 @@ export default {
           filename: '操作日志',
           original: false,
           columns: this.columns,
-          data: this.data.map((val) => {
+          data: this.data.map(val => {
             val.logdate = filters.formatDate(val.logdate);
             return val;
           })
@@ -183,7 +183,7 @@ export default {
       }
     },
     handleSubmit() {
-      fetchOperateLog(this.filter, this.current).then((response) => {
+      fetchOperateLog(this.filter, this.current).then(response => {
         this.data = response.data.dataSource;
         this.total = response.data.pageInfo.totalCount;
         this.$Message.success('刷新成功！');
@@ -194,12 +194,12 @@ export default {
     },
     changePage(pageIndex) {
       this.current = pageIndex;
-      fetchOperateLog(this.filter, this.current).then((response) => {
+      fetchOperateLog(this.filter, this.current).then(response => {
         this.data = response.data.dataSource;
       });
     },
     changeSize(pageSize) {
-      fetchOperateLog(this.filter, this.current, pageSize).then((response) => {
+      fetchOperateLog(this.filter, this.current, pageSize).then(response => {
         this.data = response.data.dataSource;
       });
     },

@@ -1,15 +1,15 @@
 <template>
   <Dropdown class="message">
-    <Badge :count="unReadMessage.length" overflow-count="99">
+    <Badge :count="totleMessage" overflow-count="99">
       <Icon type="ios-bell-outline" size="30" color="#fff"></Icon>
     </Badge>
     <Dropdown-menu slot="list">
       <header>站内消息</header>
-      <div v-bar>
-        <ul class="content-wrap" v-if="unReadMessage.length !== 0">
-          <li v-for="message in unReadMessage" :key="message.title">
-            {{ message.title }}
-            <span>{{ message.time }}</span>
+      <div v-bar style="overflow:hidden">
+        <ul class="content-wrap" v-if="totleMessage !== 0">
+          <li v-for="message in unReadMessage" :key="message.id">
+            <router-link class="title" :to="{path: '/securitymenu/messagecenter/messagecenter001'}">{{ message.title }}</router-link>
+            <span class="time">{{ message.createTime | formatDate}}</span>
           </li>
         </ul>
         <p v-else style="text-align: center">您暂时没有站内消息</p>
@@ -22,6 +22,8 @@
   </Dropdown>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Msg',
   data() {
@@ -29,9 +31,7 @@ export default {
     };
   },
   computed: {
-    unReadMessage() {
-      return this.$store.getters.unReadMessage;
-    }
+    ...mapGetters(['unReadMessage', 'totleMessage'])
   },
   created() {
     this.$store.dispatch('fetchMsg');
@@ -77,8 +77,23 @@ export default {
   ul.content-wrap {
     max-height: 190px;
 
+    .title {
+      display: inline-block;
+      max-width: 100px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .time {
+      float: right;
+      font-size: 12px;
+    }
+
     li {
       line-height: 50px;
+      height: 50px;
+      padding: 0 0 0 10px;
 
       &:not(:last-child) {
         border-bottom: 1px solid @border;
@@ -86,11 +101,6 @@ export default {
 
       &:hover {
         background: #f4f4f4;
-      }
-
-      span {
-        float: right;
-        margin-right: 40px;
       }
     }
   }

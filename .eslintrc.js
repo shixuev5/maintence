@@ -38,6 +38,7 @@ module.exports = {
     'comma-dangle': ["error", "never"],
     'no-param-reassign': ["error", { "props": false }],
     'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
-    'arrow-body-style': ["error", "as-needed"]
+    'arrow-body-style': ["error", "as-needed"],
+    'arrow-parens': ["error", "as-needed"]
   }
 }

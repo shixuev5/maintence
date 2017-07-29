@@ -16,7 +16,6 @@ export default {
   name: 'SendMessage',
   data() {
     return {
-
     };
   },
   mounted() {
@@ -31,7 +30,7 @@ export default {
         button: 'pell-button',
         editor: 'pell-editor'
       },
-      onChange: (html) => {
+      onChange: html => {
         document.getElementById('text-output').innerHTML = html;
         document.getElementById('html-output').textContent = html;
       },
@@ -40,6 +39,6 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 
 </style>

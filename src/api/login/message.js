@@ -2,10 +2,6 @@ import fetch from '@/utils/fetch';
 import config from '@/config';
 import store from '@/store';
 
-function fetchMessage() {
-  return fetch.get(`${config.message}messagebusiness/unreadtotal/${store.getters.userName}`);
-}
-
 function sendMessage(msg) {
   const data = {
     typeId: '00000000-0000-0000-0000-000000000000',
@@ -18,9 +14,13 @@ function sendMessage(msg) {
   });
 }
 
-function fetchMsgList(filter) {
-  return fetch.post(`${config.message}messagebusiness/findpagelist`, filter, {
-    description: '获取消息列表'
+function fetchMessage(filter, pageIndex, pageSize = 10) {
+  return fetch.post(`${config.message}messagebusiness/findpagelist`, {
+    objCondition: {
+      ...filter
+    },
+    pageIndex,
+    pageSize
   });
 }
 
@@ -37,9 +37,8 @@ function deleteMessage(data) {
 }
 
 export {
-    fetchMessage,
-    sendMessage,
-    fetchMsgList,
-    markRead,
-    deleteMessage
+  sendMessage,
+  fetchMessage,
+  markRead,
+  deleteMessage
 };

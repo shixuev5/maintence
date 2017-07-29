@@ -1,12 +1,13 @@
 import Login from '@/views/login/login';
+import ResourceAllocat from 'views/resource/allocat';
 
 const Layout = () =>
   import('views/layout/layout.vue');
 const DashBoard = () =>
   import('views/layout/dashboard.vue');
 
-const ResourceAllocat = () =>
-  import('views/resource/allocat');
+// const ResourceAllocat = () =>
+//   import('views/resource/allocat');
 const ResourceView = () =>
   import('views/resource/view');
 const ResourceRecover = () =>
