@@ -7,16 +7,48 @@ function fetchOperateLog(filter, pageIndex, pageSize = 10) {
   // return fetch.get('/src/mock/operateLog.json');
 }
 
-function fetchServiceLog(filter) {
-  return fetch.post(`${config.maintence}serviceoperationstatistic/queryfilter/${store.getters.userId}`, filter);
+function downloadOperateLog(fileds, filter) {
+  fetch.post(`${config.maintence}maintenceoperationlog/export`, { fileds, filter })
+    .then(response => window.open(`${config.maintence}download/excel/${response.data}.xls`));
 }
 
-function fetchPlatformLog(filter) {
-  return fetch.post(`${config.maintence}platformrunninglog/querybydate`, filter);
+function fetchServiceLog(filter, pageIndex, pageSize = 10) {
+  return fetch.post(`${config.maintence}serviceoperationstatistic/queryfilter/${store.getters.userId}`, {
+    pageIndex,
+    pageSize,
+    ...filter
+  });
 }
 
-function fetchHadoopLog(filter) {
-  return fetch.post(`${config.maintence}hadooplog/querylogs`, filter);
+function downloadServiceLog(fileds, filter) {
+  fetch.post(`${config.maintence}serviceoperationstatistic/export/${store.getters.userId}`, { fileds, filter })
+    .then(response => window.open(`${config.maintence}download/excel/${response.data}.xls`));
+}
+
+function fetchPlatformLog(filter, pageIndex, pageSize = 10) {
+  return fetch.post(`${config.maintence}platformrunninglog/querybydate`, {
+    pageIndex,
+    pageSize,
+    ...filter
+  });
+}
+
+function downloadPlatformLog(fileds, filter) {
+  fetch.post(`${config.maintence}platformrunninglog/export`, { fileds, filter })
+    .then(response => window.open(`${config.maintence}download/excel/${response.data}.xls`));
+}
+
+function fetchHadoopLog(filter, pageIndex, pageSize = 10) {
+  return fetch.post(`${config.maintence}hadooplog/querylogs`, {
+    pageIndex,
+    pageSize,
+    ...filter
+  });
+}
+
+function downloadHadoopLog(fileds, filter) {
+  fetch.post(`${config.maintence}hadooplog/export`, { fileds, ...filter })
+    .then(response => window.open(`${config.maintence}download/excel/${response.data}.xls`));
 }
 
 function fetchErrorLog(filter, pageIndex, pageSize) {
@@ -25,8 +57,12 @@ function fetchErrorLog(filter, pageIndex, pageSize) {
 
 export {
   fetchOperateLog,
+  downloadOperateLog,
   fetchServiceLog,
+  downloadServiceLog,
   fetchPlatformLog,
+  downloadPlatformLog,
   fetchHadoopLog,
+  downloadHadoopLog,
   fetchErrorLog
 };

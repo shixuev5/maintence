@@ -26,7 +26,7 @@
         </Col>
       </Row>
     </div>
-    <Table ref="table" :data="data" :columns="columns" :height="tableHeight" size="small" border highlight-row stripe>
+    <Table ref="table" :data="data" :columns="columns" size="small" border highlight-row stripe>
     </Table>
     <div class="footer">
       <Page :total="total" :current="current" @on-change="changePage" @on-page-size-change="changeSize" size="small" placement="top" show-total show-sizer show-elevator></Page>
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { fetchOperateLog } from '@/api/log/log';
+import { fetchOperateLog, downloadOperateLog } from '@/api/log/log';
 import validate from '@/utils/validate';
 import filters from '@/filters';
 import { getStyle, debounce } from '@/utils/util';
@@ -118,10 +118,7 @@ export default {
         title: '创建时间',
         key: 'logdate',
         align: 'center',
-        // eslint-disable-next-line
-        render: (h, params) => {
-          return <div>{filters.formatDate(params.row.logdate)}</div>;
-        }
+        render: (h, params) => <div>{filters.formatDate(params.row.logdate)}</div>
       },
       {
         title: '日志来源',
@@ -167,18 +164,26 @@ export default {
   },
   methods: {
     exportData() {
-      this.$refs.table.exportCsv({
-        filename: '操作日志',
-        original: false,
-        columns: this.columns,
-        data: this.data.map((val) => {
-          val.logdate = filters.formatDate(val.logdate);
-          return val;
-        })
-      });
+      if (this.total > 1000) {
+        const fileds = this.columns.map(val => ({
+          name: val.key,
+          alias: val.title
+        }));
+        downloadOperateLog(fileds, this.filter);
+      } else {
+        this.$refs.table.exportCsv({
+          filename: '操作日志',
+          original: false,
+          columns: this.columns,
+          data: this.data.map((val) => {
+            val.logdate = filters.formatDate(val.logdate);
+            return val;
+          })
+        });
+      }
     },
     handleSubmit() {
-      fetchOperateLog(this.filter, this.current, 10).then((response) => {
+      fetchOperateLog(this.filter, this.current).then((response) => {
         this.data = response.data.dataSource;
         this.total = response.data.pageInfo.totalCount;
         this.$Message.success('刷新成功！');
@@ -240,4 +245,3 @@ export default {
   padding: 20px 0;
 }
 </style>
-

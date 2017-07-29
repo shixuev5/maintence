@@ -4,11 +4,10 @@ import Cookie from 'js-cookie';
 const user = {
   state: {
     userInfo: Cookie.getJSON('token') || {},
-    token: Cookie.get('token') || '',
-    userId: Cookie.getJSON('token').id || ''
+    token: Cookie.get('token') || ''
   },
   getters: {
-    userId: state => state.userId,
+    userId: state => state.userInfo.id,
     userName: state => state.userInfo.name,
     user: state => state.userInfo,
     token: state => state.token
