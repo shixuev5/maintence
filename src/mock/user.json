@@ -1,0 +1,42 @@
+{
+  "statusCode": 200,
+  "message": "完成",
+  "data": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "cano": "测试",
+    "email": "",
+    "flag": 1,
+    "permtype": 0,
+    "ip": null,
+    "name": "admin",
+    "no": "10",
+    "onlinestatus": null,
+    "orgid": "00000000-0000-0000-0000-000000000000",
+    "orgname": "超级管理员组织",
+    "orgparentid": null,
+    "photouri": null,
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "permid": null,
+    "phone": "",
+    "postid": "00000000-0000-0000-0000-000000000000",
+    "pwdupdatetime": 38142366,
+    "syscreatetime": 23591015,
+    "syscreator": "admin",
+    "systheorg": "00000000-0000-0000-0000-000000000000",
+    "systhepost": null,
+    "sysupdater": null,
+    "sysupdatetime": null,
+    "truename": "超级管理员",
+    "type": 0,
+    "usetime": 1513872000000,
+    "orgrootid": "00000000-0000-0000-0000-000000000000",
+    "posts": [
+      {
+        "mainpost": 1,
+        "postowner": 1,
+        "name": "超级管理员",
+        "id": "00000000-0000-0000-0000-000000000000"
+      }
+    ]
+  }
+}

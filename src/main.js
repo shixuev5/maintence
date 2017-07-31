@@ -12,6 +12,7 @@ import App from '@/App';
 import '@/style/index.less';   // 全局覆盖iview样式
 import '@/style/scrollbar.less';
 
+
 Vue.use(VueBar);
 Vue.use(iView);
 Vue.use(Tree);

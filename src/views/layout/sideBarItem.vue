@@ -1,15 +1,20 @@
 <template>
   <div>
     <Tooltip v-if="!menuIsOpen" :content="route.name" placement="right">
-      <Icon :type="route.icon" :size="iconSize"></Icon>
+       <SvgIcon :iconClass="route.icon" :size="iconSize"></SvgIcon> 
     </Tooltip>
-    <Icon v-else :type="route.icon" :size="iconSize"></Icon>
+     <SvgIcon v-else :iconClass="route.icon" :size="iconSize"></SvgIcon>     
     <span class="route-name">{{route.name}}</span>
   </div>
 </template>
 <script>
+import SvgIcon from '@/components/Icon';
+
 export default {
   name: 'SideBarItem',
+  components: {
+    SvgIcon
+  },
   props: {
     iconSize: {
       type: Number,

@@ -22,16 +22,17 @@ function fetchMessage(filter, pageIndex, pageSize = 10) {
     pageIndex,
     pageSize
   });
+  // return fetch.get('/src/mock/message.json');
 }
 
-function markRead(data) {
-  return fetch.post(`${config.message}messagebusiness/batchread/1`, data, {
+function markRead(ids) {
+  return fetch.post(`${config.message}messagebusiness/batchread/1`, ids, {
     description: '标记信息已读'
   });
 }
 
-function deleteMessage(data) {
-  return fetch.post(`${config.message}messagebusiness/deletebyids`, data, {
+function deleteMessage(ids) {
+  return fetch.post(`${config.message}messagebusiness/deletebyids`, ids, {
     description: '删除消息'
   });
 }

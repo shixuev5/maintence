@@ -9,10 +9,10 @@ function fetchOrganize() {
   });
 }
 
-function fetchUserList(keyword = '', pageIndex, pageSize) {
+function fetchUserList(keyword = '', orgid = '', pageIndex, pageSize) {
   return fetch.post(`${config.usercenter}user/getuserbycondition/${pageIndex}/${pageSize}`, {
     keyword,
-    orgid: store.getters.user.orgid
+    orgid
   });
 }
 

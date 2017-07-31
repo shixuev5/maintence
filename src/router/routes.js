@@ -28,8 +28,6 @@ const BlackList = () =>
 const WhiteList = () =>
   import('views/manager/whiteList');
 
-const RegularTasks = () =>
-  import('views/taskmenu/regularTasks');
 
 const OperateLog = () =>
   import('views/log/operate');
@@ -103,219 +101,207 @@ export const asyncRoutes = [{
   component: Layout,
   name: '资源管理',
   redirect: '/resourcemenu/resourceallocat',
-  icon: 'ios-pie',
+  icon: 'bingzhuangtu',
   children: [{
     path: 'resourceallocat',
     component: ResourceAllocat,
     name: '资源分配',
-    icon: 'ios-pie'
+    icon: 'fenpei'
   }, {
     path: 'resourceview',
     component: ResourceView,
     name: '资源查看',
-    icon: 'ios-pie'
+    icon: 'chakan1'
   }, {
     path: 'resourcerecover',
     component: ResourceRecover,
     name: '资源回收',
-    icon: 'ios-pie'
+    icon: 'huishou'
   }]
 }, {
   path: '/securitymenu',
   component: Layout,
   name: '安全管理',
   redirect: '/securitymenu/usermanage',
-  icon: 'person-stalker',
+  icon: 'safe',
   children: [{
     path: 'usermanage',
     component: UserManage,
     name: '用户管理',
-    icon: 'person-stalker'
+    icon: 'user-outline'
   }, {
     path: 'groupmanage',
     name: '群组管理',
     redirect: '/securitymenu/groupmanage/groupmanage001',
-    icon: 'person-stalker',
+    // icon: 'person-stalker',
     children: [{
       path: 'groupmanage001',
       component: OrganizeManager,
-      name: '组织机构管理',
-      icon: 'person-stalker'
+      name: '组织机构',
+      icon: 'portal-icon-zuzhi'
     },
     {
       path: 'groupmanage002',
       component: PostManager,
-      name: '岗位信息管理',
-      icon: 'person-stalker'
+      name: '岗位信息',
+      icon: 'gangweiguanli'
     }
     ]
   }, {
     path: 'rightmanage',
     name: '权限管理',
     redirect: '/securitymenu/rightmanage/rightmanage001',
-    icon: 'person-stalker',
+    // icon: 'person-stalker',
     children: [{
       path: 'rightmanage001',
       component: ResourceAllocat,
       name: '功能权限',
-      icon: 'person-stalker'
+      icon: 'quanxian'
     },
     {
       path: 'rightmanage002',
       component: ResourceAllocat,
       name: '数据/服务',
-      icon: 'person-stalker'
+      icon: 'quanxian'
     }
     ]
   }, {
     path: 'messagecenter',
     name: '消息管理',
     redirect: '/securitymenu/messagecenter/messagecenter001',
-    icon: 'person-stalker',
+    // icon: 'person-stalker',
     children: [{
       path: 'messagecenter001',
       component: MessageCenter,
       name: '消息中心',
-      icon: 'person-stalker'
+      icon: 'xiaoxizhongxin'
     },
     {
       path: 'messagecenter002',
       component: SendMessage,
       name: '站内信',
-      icon: 'person-stalker'
+      icon: 'duanxinfasong'
     }
     ]
   }, {
     path: 'antispam',
     name: '反垃圾管理',
     redirect: '/securitymenu/antispam/antispam001',
-    icon: 'person-stalker',
+    // icon: 'person-stalker',
     children: [{
       path: 'antispam001',
       component: BlackList,
       name: '黑名单',
-      icon: 'person-stalker'
+      icon: 'heimingdan'
     },
     {
       path: 'antispam002',
       component: WhiteList,
       name: '白名单',
-      icon: 'person-stalker'
+      icon: 'baimingdan'
     }
     ]
-  }]
-}, {
-  path: '/taskmenu',
-  component: Layout,
-  name: '任务管理',
-  redirect: '/taskmenu/regulartasks',
-  icon: 'person-stalker',
-  children: [{
-    path: 'regulartasks',
-    component: RegularTasks,
-    name: '定时任务管理',
-    icon: 'person-stalker'
   }]
 }, {
   path: '/logmanagemenu',
   component: Layout,
   name: '日志管理',
   redirect: '/logmanagemenu/operatelog',
-  icon: 'person-stalker',
+  icon: 'rizhi',
   children: [{
     path: 'operatelog',
     component: OperateLog,
-    name: '运维操作日志',
-    icon: 'person-stalker'
+    name: '操作日志',
+    icon: 'caozuo'
   }, {
     path: 'servicelog',
     component: ServiceLog,
-    name: '服务运行日志',
-    icon: 'person-stalker'
+    name: '服务日志',
+    icon: 'fuwu'
   }, {
     path: 'platformlog',
     component: PlatformLog,
-    name: '平台运行日志',
-    icon: 'person-stalker'
+    name: '平台日志',
+    icon: 'pingtai'
   }, {
     path: 'hadooplog',
     component: HadoopLog,
-    name: 'Hadoop节点日志',
-    icon: 'person-stalker'
+    name: 'Hadoop日志',
+    icon: 'hadoop'
   }, {
     path: 'errorlog',
     component: ErrorLog,
-    name: '错误日志管理',
-    icon: 'person-stalker'
+    name: '错误日志',
+    icon: 'bug'
   }]
 }, {
   path: '/statmenu',
   component: Layout,
   name: '统计分析',
   redirect: '/statmenu/servicestat',
-  icon: 'person-stalker',
+  icon: 'fenxi',
   children: [{
     path: 'servicestat',
     component: ServiceState,
-    name: '服务访问统计',
-    icon: 'person-stalker'
+    name: '服务访问',
+    icon: 'iconfonttongji'
   }, {
     path: 'visitstat',
     component: VisitState,
-    name: '用户访问统计',
-    icon: 'person-stalker'
+    name: '用户访问',
+    icon: 'yonghuzonghetongji'
   }, {
     path: 'webappstat',
     component: WebAppState,
-    name: '平台应用统计',
-    icon: 'person-stalker'
+    name: '平台应用',
+    icon: 'statistics'
   }]
 }, {
   path: '/platformmonitormenu',
   component: Layout,
   name: '平台监控',
   redirect: '/platformmonitormenu/webmonitor',
-  icon: 'person-stalker',
+  icon: 'jiankong',
   children: [{
     path: 'webmonitor',
     component: WebMonitor,
-    name: 'Web容器监控',
-    icon: 'person-stalker'
+    name: 'Web容器',
+    icon: 'tomcat'
   }, {
     path: 'databasemonitor',
     component: DataBaseMonitor,
-    name: '数据库监控',
-    icon: 'person-stalker'
+    name: '数据库',
+    icon: 'shujuku'
   }, {
     path: 'gismonitor',
     component: GISMonitor,
-    name: 'GIS服务器监控',
-    icon: 'person-stalker'
+    name: 'GIS服务器',
+    icon: 'tomcat'
   }, {
     path: 'servicemonitor',
     component: ServiceMonitor,
-    name: '服务监控',
-    icon: 'person-stalker'
+    name: '平台服务监控',
+    icon: 'tomcat'
   }, {
     path: 'hadoopmonitor',
     name: '分布式平台管理',
     redirect: '/platformmonitormenu/hadoopmonitor/HadoopMonitor001',
-    icon: 'person-stalker',
+    // icon: 'person-stalker',
     children: [{
       path: 'HadoopMonitor001',
       component: HdfsMonitor,
-      name: '分布式存储监控',
-      icon: 'person-stalker'
+      name: '存储监控',
+      icon: 'tomcat'
     }, {
       path: 'HadoopMonitor002',
       component: Ganglia,
-      name: '分布式服务器监控',
-      icon: 'person-stalker'
+      name: '服务器监控',
+      icon: 'tomcat'
     }, {
       path: 'hadoopmonitor004',
       component: JettyMonitor,
-      name: '分布式web服务器',
-      icon: 'person-stalker'
+      name: 'web服务器',
+      icon: 'tomcat'
     }]
   }]
 }, {
@@ -323,59 +309,59 @@ export const asyncRoutes = [{
   component: Layout,
   name: '系统管理',
   redirect: '/systemmanagemenu/dictionary',
-  icon: 'person-stalker',
+  icon: 'guanli',
   children: [{
     path: 'dictionary',
     component: Dictionary,
     name: '数据字典',
-    icon: 'person-stalker'
+    icon: 'guanli'
   }, {
     path: 'serverconfig',
     component: ServerConfig,
     name: '服务器配置',
-    icon: 'person-stalker'
+    icon: 'guanli'
   }, {
     path: 'alarmconfig',
     name: '异常报警配置',
-    icon: 'person-stalker',
+    // icon: 'guanli',
     redirect: '/systemmanagemenu/alarmconfig/alarmconfig001',
     children: [{
       path: 'alarmconfig001',
       component: AlarmRule,
-      name: '报警规则管理',
-      icon: 'person-stalker'
+      name: '报警规则',
+      icon: 'guanli'
     }, {
       path: 'alarmconfig002',
       component: AlarmMould,
-      name: '报警信息模板管理',
-      icon: 'person-stalker'
+      name: '报警模板',
+      icon: 'guanli'
     }]
   }, {
     path: 'errorcode',
     component: ErrorCode,
     name: '错误代码管理',
-    icon: 'person-stalker'
+    icon: 'guanli'
   }]
 }, {
   path: '/systembackupmenu',
   component: Layout,
   name: '系统备份',
   redirect: '/systembackupmenu/resourcbackup',
-  icon: 'person-stalker',
+  icon: 'beifenguanli',
   children: [{
     path: 'resourcbackup',
     component: ResourceBackup,
     name: '资源数据备份',
-    icon: 'person-stalker'
+    icon: 'beifenguanli'
   }, {
     path: 'appbackup',
     component: AppBackup,
     name: '应用备份',
-    icon: 'person-stalker'
+    icon: 'beifenguanli'
   }, {
     path: 'cachereply',
     component: CacheReply,
     name: '缓存恢复',
-    icon: 'person-stalker'
+    icon: 'beifenguanli'
   }]
 }];

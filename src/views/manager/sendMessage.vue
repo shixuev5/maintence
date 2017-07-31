@@ -4,12 +4,11 @@
     <div>
       Text output:
       <div id="text-output"></div>
-      HTML output:
-      <pre id="html-output"></pre>
     </div>
   </div>
 </template>
 <script>
+import 'pell/dist/pell.min.css';
 import pell from 'pell';
 
 export default {
@@ -20,6 +19,7 @@ export default {
   },
   mounted() {
     pell.init({
+      element: document.getElementById('pell'),
       actions: [
         'bold',
         { name: 'italic', icon: '&#9786;', title: 'Zitalic' },
@@ -32,9 +32,7 @@ export default {
       },
       onChange: html => {
         document.getElementById('text-output').innerHTML = html;
-        document.getElementById('html-output').textContent = html;
-      },
-      root: 'pell'
+      }
     });
   }
 };

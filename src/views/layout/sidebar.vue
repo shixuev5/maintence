@@ -10,16 +10,14 @@
         <template slot="title">
           <SideBarItem :route="routes" :menuIsOpen="menuIsOpen" :iconSize="iconSize"></SideBarItem>
         </template>
-        <div class="menu-wrap">
-          <Menu-item v-if="!route.children" v-for="route in routes.children" :key="route.name" :name="route.name">
-            <SideBarItem :route="route" :menuIsOpen="menuIsOpen" :iconSize="itemIconSize"></SideBarItem>
+        <Menu-item v-if="!route.children" v-for="route in routes.children" :key="route.name" :name="route.name">
+          <SideBarItem :route="route" :menuIsOpen="menuIsOpen" :iconSize="itemIconSize"></SideBarItem>
+        </Menu-item>
+        <Menu-group v-else :title="route.name">
+          <Menu-item v-for="child in route.children" :key="child.name" :name="child.name">
+            <SideBarItem :route="child" :menuIsOpen="menuIsOpen" :iconSize="itemIconSize"></SideBarItem>
           </Menu-item>
-          <Menu-group v-else :title="route.name">
-            <Menu-item v-for="child in route.children" :key="child.name" :name="child.name">
-              <SideBarItem :route="child" :menuIsOpen="menuIsOpen" :iconSize="itemIconSize"></SideBarItem>
-            </Menu-item>
-          </Menu-group>
-        </div>
+        </Menu-group>
       </Submenu>
     </Menu>
   </div>
@@ -45,7 +43,7 @@ export default {
   },
   computed: {
     itemIconSize() {
-      return this.iconSize - 2;
+      return this.iconSize - 1;
     },
     ...mapGetters([
       'permitRoutes'
@@ -56,7 +54,12 @@ export default {
       this.$emit('toggleClick');
     },
     select(name) {
-      this.$router.push({ name });
+      this.$router.push({
+        name,
+        query: {
+          t: Date.now()
+        }
+      });
     },
     change(nameArr) {
       this.$router.push({ name: nameArr[0] });
@@ -72,17 +75,11 @@ export default {
   top: 60px;
   bottom: 0px;
   left: 0px;
-  width: 180px;
-  transition: width .3s ease-out;
+  width: 180px; // transition: width .3s ease-out;
   background: @sidebar;
 
   .ivu-menu-submenu-title>div {
     display: inline-block;
-  }
-
-  .menu-wrap {
-    max-height: calc(~"100vh - 458px");
-    overflow-y: auto;
   }
 
   .route-name {
@@ -90,12 +87,17 @@ export default {
   }
 
   .ivu-menu-submenu li.ivu-menu-item {
-    padding-left: 33px;
+    padding-left: 28px;
   }
 
   .ivu-menu-vertical .ivu-menu-item-group-title {
     height: 28px;
     line-height: 28px;
+  }
+
+  .ivu-menu-vertical .ivu-menu-item,
+  .ivu-menu-vertical .ivu-menu-submenu-title {
+    padding: 12px 22px;
   }
 }
 
@@ -103,19 +105,16 @@ export default {
   &.side-bar {
     width: 60px;
   }
-  .menu-wrap {
-    overflow-y: inherit;
-  }
   .route-name,
   .ivu-icon-ios-arrow-down,
   .ivu-menu-item-group-title {
     display: none;
   }
+  li.ivu-menu-submenu li.ivu-menu-item {
+    padding-left: 22px;
+  }
   .ivu-tooltip-popper {
     left: 60px !important;
-  }
-  .ivu-menu-vertical .ivu-menu-item {
-    padding: 14px 24px !important;
   }
 }
 

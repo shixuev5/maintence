@@ -5,7 +5,7 @@
     </Badge>
     <Dropdown-menu slot="list">
       <header>站内消息</header>
-      <div v-bar style="overflow:hidden">
+       <div v-bar> 
         <ul class="content-wrap" v-if="totleMessage !== 0">
           <li v-for="message in unReadMessage" :key="message.id">
             <router-link class="title" :to="{path: '/securitymenu/messagecenter/messagecenter001'}">{{ message.title }}</router-link>
@@ -13,7 +13,7 @@
           </li>
         </ul>
         <p v-else style="text-align: center">您暂时没有站内消息</p>
-      </div>
+       </div>
       <footer>
         <router-link :to="{path: '/securitymenu/messagecenter/messagecenter001'}">查看更多</router-link>
       </footer>
@@ -76,6 +76,7 @@ export default {
 
   ul.content-wrap {
     max-height: 190px;
+    overflow-y: hidden;
 
     .title {
       display: inline-block;

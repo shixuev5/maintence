@@ -1,43 +1,41 @@
 <template>
   <div id="root">
-    <div class="header">
-      <Row>
-        <Col span="21">
-        <Form ref="formInline" :model="form" :label-width="80" inline>
-          <Form-item :rules="rules" prop="ip" label="IP地址：">
-            <Input v-model="form.ip" placeholder="请输入IP地址"></Input>
-          </Form-item>
-          <Form-item prop="name" label="操作名称：">
-            <Input v-model="form.name" placeholder="请输入操作名称"></Input>
-          </Form-item>
-          <Form-item prop="date" label="起止时间：">
-            <Date-picker type="datetimerange" v-model="form.date" :options="dateOption" format="yyyy/MM/dd HH:mm" placeholder="选择日期和时间" style="width: 300px"></Date-picker>
-          </Form-item>
-          <div class="button">
-            <Button type="primary" icon="ios-search" @click="handleSubmit()">搜索</Button>
-            <Button type="ghost" @click="handleReset()" style="margin-left:8px">重置</Button>
-          </div>
-        </Form>
-        </Col>
-        <Col span="3">
-        <Button class="export" type="primary" size="large" @click="exportData()">
-          <Icon type="ios-download-outline" size="20"></Icon>导出
-        </Button>
-        </Col>
-      </Row>
-    </div>
+    <Row>
+      <Col span="21">
+      <Form ref="formInline" :model="form" :label-width="80" inline>
+        <Form-item :rules="rules" prop="ip" label="IP地址：">
+          <Input v-model="form.ip" placeholder="请输入IP地址"></Input>
+        </Form-item>
+        <Form-item prop="name" label="操作名称：">
+          <Input v-model="form.name" placeholder="请输入操作名称"></Input>
+        </Form-item>
+        <Form-item prop="date" label="起止时间：">
+          <Date-picker type="datetimerange" v-model="form.date" :options="dateOption" format="yyyy/MM/dd HH:mm" placeholder="选择日期和时间" style="width: 300px"></Date-picker>
+        </Form-item>
+        <div class="button">
+          <Button type="primary" icon="ios-search" @click="handleSubmit()">搜索</Button>
+          <Button type="ghost" @click="handleReset()" style="margin-left:8px">重置</Button>
+        </div>
+      </Form>
+      </Col>
+      <Col span="3">
+      <Button class="export" :loading="exportLoading" type="primary" size="large" @click="exportData()">
+        <Icon v-show="!exportLoading" type="ios-download-outline" size="20"></Icon>
+        <span v-if="!exportLoading">导出</span>
+        <span v-else>导出中...</span>
+      </Button>
+      </Col>
+    </Row>
     <Table ref="table" :data="data" :columns="columns" size="small" border highlight-row stripe>
     </Table>
-    <div class="footer">
-      <Page :total="total" :current="current" @on-change="changePage" @on-page-size-change="changeSize" size="small" placement="top" show-total show-sizer show-elevator></Page>
-    </div>
+    <!-- @on-sort-change="remoteSort" -->
+    <Page :total="total" :current="current" @on-change="changePage" @on-page-size-change="changeSize" size="small" placement="top" show-total show-sizer show-elevator></Page>
   </div>
 </template>
 <script>
-import { fetchOperateLog, downloadOperateLog } from '@/api/log/log';
+import { fetchOperateLog } from '@/api/log/log';
 import validate from '@/utils/validate';
 import filters from '@/filters';
-import { getStyle, debounce } from '@/utils/util';
 
 export default {
   name: 'OperateLog',
@@ -111,13 +109,13 @@ export default {
           }
         ],
         filterMethod(value, row) {
-          return row.logstatusname.includes(value);
+          return row.logstatusname.indexOf(value) > -1;
         }
       },
       {
         title: '创建时间',
         key: 'logdate',
-        align: 'center',
+        sortable: 'custom',
         render: (h, params) => <div>{filters.formatDate(params.row.logdate)}</div>
       },
       {
@@ -147,9 +145,10 @@ export default {
         message: '请输入正确的ip地址',
         trigger: 'blur'
       },
-      tableHeight: 0,
+      exportLoading: false,
       total: 0,
-      current: 1
+      current: 1,
+      pageSize: 10
     };
   },
   computed: {
@@ -164,26 +163,22 @@ export default {
   },
   methods: {
     exportData() {
-      if (this.total > 1000) {
-        const fileds = this.columns.map(val => ({
-          name: val.key,
-          alias: val.title
-        }));
-        downloadOperateLog(fileds, this.filter);
-      } else {
+      this.exportLoading = true;
+      fetchOperateLog(this.filter, this.current, this.total).then(response => {
         this.$refs.table.exportCsv({
           filename: '操作日志',
           original: false,
           columns: this.columns,
-          data: this.data.map(val => {
+          data: response.data.dataSource.map(val => {
             val.logdate = filters.formatDate(val.logdate);
             return val;
           })
         });
-      }
+        this.exportLoading = false;
+      });
     },
     handleSubmit() {
-      fetchOperateLog(this.filter, this.current).then(response => {
+      fetchOperateLog(this.filter, this.current, this.pageSize).then(response => {
         this.data = response.data.dataSource;
         this.total = response.data.pageInfo.totalCount;
         this.$Message.success('刷新成功！');
@@ -192,56 +187,50 @@ export default {
     handleReset() {
       this.$refs.formInline.resetFields();
     },
+    // remoteSort(column, key, order) {
+    //   fetchOperateLog(this.filter, this.current, this.pageSize).then(response => {
+    //     this.data = response.data.dataSource;
+    //   });
+    // },
     changePage(pageIndex) {
       this.current = pageIndex;
-      fetchOperateLog(this.filter, this.current).then(response => {
+      fetchOperateLog(this.filter, this.current, this.pageSize).then(response => {
         this.data = response.data.dataSource;
       });
     },
     changeSize(pageSize) {
-      fetchOperateLog(this.filter, this.current, pageSize).then(response => {
+      this.pageSize = pageSize;
+      fetchOperateLog(this.filter, this.current, this.pageSize).then(response => {
         this.data = response.data.dataSource;
       });
-    },
-    calcTableHeight() {
-      const totalHeight = getStyle(this.$el, 'height');
-      const headerHeight = getStyle(document.getElementsByClassName('header')[0], 'height');
-      const footerHeight = getStyle(document.getElementsByClassName('footer')[0], 'height');
-      this.tableHeight = totalHeight - headerHeight - footerHeight;
     }
   },
   created() {
     this.handleSubmit();
-  },
-  mounted() {
-    this.calcTableHeight();
-    window.addEventListener('resize', debounce(this.calcTableHeight), false);
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', debounce(this.calcTableHeight), false);
   }
 };
 </script>
 <style lang="less" scoped>
 #root {
   height: 100%;
-  width: 100%;
-}
 
-.button {
-  display: inline-block;
-  margin-bottom: 24px;
-  margin-right: 10px;
-}
-
-.export {
-  .ivu-icon {
+  .button {
+    display: inline-block;
+    margin-bottom: 24px;
     margin-right: 10px;
   }
-}
 
-.footer {
-  height: 45px;
-  padding: 20px 0;
+  .export .ivu-icon {
+    margin-right: 10px;
+  }
+
+  .ivu-table-wrapper {
+    max-height: calc(~"100% - 106px");
+    overflow-y: auto;
+  }
+
+  .ivu-page {
+    margin-top: 24px;
+  }
 }
 </style>

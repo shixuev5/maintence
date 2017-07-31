@@ -1,4 +1,6 @@
-import { fetchMessage } from '@/api/login/message';
+import {
+  fetchMessage
+} from '@/api/login/message';
 import io from 'socket.io-client';
 import config from '@/config';
 import Notice from 'iview/src/components/notice';
@@ -26,7 +28,10 @@ const app = {
     }
   },
   actions: {
-    fetchMsg({ commit, getters }) {
+    fetchMsg({
+      commit,
+      getters
+    }) {
       return new Promise(resolve => {
         fetchMessage({
           readState: 0,
@@ -38,7 +43,9 @@ const app = {
         });
       });
     },
-    connectSocket({ getters }) {
+    connectSocket({
+      getters
+    }) {
       const socket = io(config.socket, {
         query: {
           userid: getters.userName

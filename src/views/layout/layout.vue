@@ -32,10 +32,6 @@ export default {
     Msg,
     User
   },
-  data() {
-    return {
-    };
-  },
   computed: {
     iconSize() {
       return this.menuIsOpen ? 18 : 20;
@@ -46,6 +42,9 @@ export default {
   },
   methods: {
     toggleClick() {
+      this.$nextTick(() => {
+        window.dispatchEvent(new Event('resize'));
+      });
       this.$store.commit('TOGGLE_MENU');
     }
   },
@@ -66,9 +65,8 @@ export default {
 
 .main {
   margin-left: 180px;
-  height: calc(~"100vh - 60px");
-  transition: margin-left .3s ease-out;
-
+  height: calc(~"100vh - 60px"); 
+  // transition: margin-left .3s ease-out;
   &.menu-close {
     margin-left: 60px;
   }
@@ -79,7 +77,7 @@ export default {
   }
 
   .layout-content {
-    padding: 15px;
+    padding: 24px 16px;
     height: calc(~"100% - 34px");
     background: @content;
   }

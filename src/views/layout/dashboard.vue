@@ -10,6 +10,13 @@ export default {
     return {
 
     };
+  },
+  mounted() {
+
   }
 };
 </script>
+<style lang="less" scoped>
+
+</style>
+

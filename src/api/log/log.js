@@ -4,7 +4,6 @@ import store from '@/store';
 
 function fetchOperateLog(filter, pageIndex, pageSize = 10) {
   return fetch.post(`${config.maintence}maintenceoperationlog/querybyfilter/${pageIndex}/${pageSize}`, filter);
-  // return fetch.get('/src/mock/operateLog.json');
 }
 
 function downloadOperateLog(fileds, filter) {
