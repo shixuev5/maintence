@@ -2,7 +2,7 @@
   <Dropdown class="person" placement="bottom-end">
     <div>
       <img class="avatar" :src="user.photouri || '/static/img/default.png'" alt="头像">
-      <span class="user-name">{{user.name || 'shixuev5'}}</span>
+      <span class="user-name">{{user.truename || 'shixuev5'}}</span>
     </div>
     <Dropdown-menu slot="list">
       <header>用户信息</header>

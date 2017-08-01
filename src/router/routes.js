@@ -1,6 +1,8 @@
 import Login from '@/views/login/login';
 import ResourceAllocat from 'views/resource/allocat';
 
+const Wrap = { template: '<router-view></router-view>' };
+
 const Layout = () =>
   import('views/layout/layout.vue');
 const DashBoard = () =>
@@ -128,12 +130,11 @@ export const asyncRoutes = [{
     path: 'usermanage',
     component: UserManage,
     name: '用户管理',
-    icon: 'user-outline'
+    icon: 'weibiaoti114'
   }, {
-    path: 'groupmanage',
+    path: '/securitymenu/groupmanage',
     name: '群组管理',
-    redirect: '/securitymenu/groupmanage/groupmanage001',
-    // icon: 'person-stalker',
+    component: Wrap,
     children: [{
       path: 'groupmanage001',
       component: OrganizeManager,
@@ -148,10 +149,9 @@ export const asyncRoutes = [{
     }
     ]
   }, {
-    path: 'rightmanage',
+    path: '/securitymenu/rightmanage',
     name: '权限管理',
-    redirect: '/securitymenu/rightmanage/rightmanage001',
-    // icon: 'person-stalker',
+    component: Wrap,
     children: [{
       path: 'rightmanage001',
       component: ResourceAllocat,
@@ -166,10 +166,9 @@ export const asyncRoutes = [{
     }
     ]
   }, {
-    path: 'messagecenter',
+    path: '/securitymenu/messagecenter',
     name: '消息管理',
-    redirect: '/securitymenu/messagecenter/messagecenter001',
-    // icon: 'person-stalker',
+    component: Wrap,
     children: [{
       path: 'messagecenter001',
       component: MessageCenter,
@@ -184,10 +183,9 @@ export const asyncRoutes = [{
     }
     ]
   }, {
-    path: 'antispam',
+    path: '/securitymenu/antispam',
     name: '反垃圾管理',
-    redirect: '/securitymenu/antispam/antispam001',
-    // icon: 'person-stalker',
+    component: Wrap,
     children: [{
       path: 'antispam001',
       component: BlackList,
@@ -212,12 +210,12 @@ export const asyncRoutes = [{
     path: 'operatelog',
     component: OperateLog,
     name: '操作日志',
-    icon: 'caozuo'
+    icon: 'caozuo1'
   }, {
     path: 'servicelog',
     component: ServiceLog,
     name: '服务日志',
-    icon: 'fuwu'
+    icon: 'fuwu1'
   }, {
     path: 'platformlog',
     component: PlatformLog,
@@ -276,32 +274,31 @@ export const asyncRoutes = [{
     path: 'gismonitor',
     component: GISMonitor,
     name: 'GIS服务器',
-    icon: 'tomcat'
+    icon: 'maps'
   }, {
     path: 'servicemonitor',
     component: ServiceMonitor,
     name: '平台服务监控',
-    icon: 'tomcat'
+    icon: 'pingtai'
   }, {
-    path: 'hadoopmonitor',
+    path: '/platformmonitormenu/hadoopmonitor',
     name: '分布式平台管理',
-    redirect: '/platformmonitormenu/hadoopmonitor/HadoopMonitor001',
-    // icon: 'person-stalker',
+    component: Wrap,
     children: [{
       path: 'HadoopMonitor001',
       component: HdfsMonitor,
       name: '存储监控',
-      icon: 'tomcat'
+      icon: 'shujukufengxianjiankong'
     }, {
       path: 'HadoopMonitor002',
       component: Ganglia,
       name: '服务器监控',
-      icon: 'tomcat'
+      icon: 'fuwuqineicunjiankong'
     }, {
       path: 'hadoopmonitor004',
       component: JettyMonitor,
       name: 'web服务器',
-      icon: 'tomcat'
+      icon: 'WEBgongjijiankong'
     }]
   }]
 }, {
@@ -314,33 +311,32 @@ export const asyncRoutes = [{
     path: 'dictionary',
     component: Dictionary,
     name: '数据字典',
-    icon: 'guanli'
+    icon: 'shujuzidian'
   }, {
     path: 'serverconfig',
     component: ServerConfig,
     name: '服务器配置',
-    icon: 'guanli'
+    icon: 'fuwuqipeizhiwenjian'
   }, {
-    path: 'alarmconfig',
+    path: '/systemmanagemenu/alarmconfig',
     name: '异常报警配置',
-    // icon: 'guanli',
-    redirect: '/systemmanagemenu/alarmconfig/alarmconfig001',
+    component: Wrap,
     children: [{
       path: 'alarmconfig001',
       component: AlarmRule,
       name: '报警规则',
-      icon: 'guanli'
+      icon: 'baojingguanli'
     }, {
       path: 'alarmconfig002',
       component: AlarmMould,
       name: '报警模板',
-      icon: 'guanli'
+      icon: 'baojingguanli1'
     }]
   }, {
     path: 'errorcode',
     component: ErrorCode,
     name: '错误代码管理',
-    icon: 'guanli'
+    icon: 'icon-test'
   }]
 }, {
   path: '/systembackupmenu',
@@ -352,16 +348,16 @@ export const asyncRoutes = [{
     path: 'resourcbackup',
     component: ResourceBackup,
     name: '资源数据备份',
-    icon: 'beifenguanli'
+    icon: 'shujuhuifu'
   }, {
     path: 'appbackup',
     component: AppBackup,
     name: '应用备份',
-    icon: 'beifenguanli'
+    icon: 'iconfontyunbeifen'
   }, {
     path: 'cachereply',
     component: CacheReply,
     name: '缓存恢复',
-    icon: 'beifenguanli'
+    icon: 'redo'
   }]
 }];

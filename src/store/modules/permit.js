@@ -15,8 +15,8 @@ const permit = {
     permsId: state => state.perms.map(val => val.appid.toLowerCase()),
     currentPerm: (state, getters, rootState) => {
       const path = rootState.route.path;
-      for (const val of state.perms) {
-        if (path.includes(val.appid.toLowerCase())) {
+      for (let val of state.perms) {
+        if (path.indexOf(val.appid.toLowerCase()) > -1) {
           return val;
         }
       }
@@ -26,8 +26,8 @@ const permit = {
       if (constRoutes.some(routes => routes.path === path)) {
         return rootState.getters.currentPerm;
       }
-      for (const val of state.perms) {
-        if (path.includes(val.appid.toLowerCase())) {
+      for (let val of state.perms) {
+        if (path.indexOf(val.appid.toLowerCase()) > -1) {
           return val;
         }
       }

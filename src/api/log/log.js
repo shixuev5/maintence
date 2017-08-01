@@ -3,7 +3,9 @@ import config from '@/config';
 import store from '@/store';
 
 function fetchOperateLog(filter, pageIndex, pageSize = 10) {
-  return fetch.post(`${config.maintence}maintenceoperationlog/querybyfilter/${pageIndex}/${pageSize}`, filter);
+  return fetch.post(`${config.maintence}maintenceoperationlog/querybyfilter/${pageIndex}/${pageSize}`, filter, {
+    description: '运维日志查询'
+  });
 }
 
 function downloadOperateLog(fileds, filter) {
@@ -16,6 +18,8 @@ function fetchServiceLog(filter, pageIndex, pageSize = 10) {
     pageIndex,
     pageSize,
     ...filter
+  }, {
+    description: '服务日志查询'
   });
 }
 
@@ -29,6 +33,8 @@ function fetchPlatformLog(filter, pageIndex, pageSize = 10) {
     pageIndex,
     pageSize,
     ...filter
+  }, {
+    description: '平台日志查询'
   });
 }
 
@@ -42,6 +48,8 @@ function fetchHadoopLog(filter, pageIndex, pageSize = 10) {
     pageIndex,
     pageSize,
     ...filter
+  }, {
+    description: 'Hadoop日志查询'
   });
 }
 
@@ -51,7 +59,20 @@ function downloadHadoopLog(fileds, filter) {
 }
 
 function fetchErrorLog(filter, pageIndex, pageSize) {
-  return fetch.post(`${config.maintence}errorcode/log/query/${pageIndex}/${pageSize}`, filter);
+  return fetch.post(`${config.resource}serviceserrorlog/findpagelist`, {
+    pageIndex,
+    pageSize,
+    objCondition: {
+      ...filter
+    }
+  }, {
+    description: '错误日志查询'
+  });
+}
+
+function downloadErrorLog(fileds, filter) {
+  fetch.post(`${config.maintence}errorcode/log/export`, { fileds, ...filter })
+    .then(response => window.open(`${config.maintence}download/excel/${response.data}.xls`));
 }
 
 export {
@@ -63,5 +84,6 @@ export {
   downloadPlatformLog,
   fetchHadoopLog,
   downloadHadoopLog,
-  fetchErrorLog
+  fetchErrorLog,
+  downloadErrorLog
 };

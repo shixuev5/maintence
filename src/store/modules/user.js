@@ -8,7 +8,8 @@ const user = {
   },
   getters: {
     userId: state => state.userInfo.id,
-    userName: state => state.userInfo.name,
+    userName: state => state.userInfo.truename,
+    orgId: state => state.userInfo.orgid,
     user: state => state.userInfo,
     token: state => state.token
   },

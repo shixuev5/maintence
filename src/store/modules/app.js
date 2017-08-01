@@ -1,9 +1,7 @@
-import {
-  fetchMessage
-} from '@/api/login/message';
+import { fetchMessage } from '@/api/login/message';
 import io from 'socket.io-client';
 import config from '@/config';
-import Notice from 'iview/src/components/notice';
+// import Notice from 'iview/src/components/notice';
 
 const app = {
   state: {
@@ -55,13 +53,14 @@ const app = {
         console.log('socket connect!');
       });
       socket.on('message', data => {
-        Notice.info({
-          title: data.msgtitle,
-          desc: data.msgcontent,
-          onClose() {
+        console.log(data);
+        // Notice.info({
+        //   title: data.msgtitle,
+        //   desc: data.msgcontent,
+        //   onClose() {
 
-          }
-        });
+        //   }
+        // });
       });
       socket.on('disconnect', () => {
         console.log('socket disconnect!');

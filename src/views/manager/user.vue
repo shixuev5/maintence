@@ -2,7 +2,7 @@
   <Row>
     <Col span="5" class="left">
     <Input placeholder="输入关键字进行过滤" v-model="filterText"></Input>
-    <el-tree ref="tree" @node-click="clickTree" :data="treeData" :props="defaultProps" default-expand-all :filter-node-method="filterNode"></el-tree>
+    <el-tree ref="tree" @node-click="clickTree" :render-content="renderTree" :data="treeData" :props="defaultProps" :filter-node-method="filterNode" default-expand-all highlight-current></el-tree>
     </Col>
     <Col class="right" span="18" offset="1">
     <Row style="margin-bottom:24px">
@@ -21,24 +21,24 @@
       </Col>
       <Col offset="6" span="6">
       <Input :value="keyword" placeholder="请输入登录名、姓名、岗位名...">
-      <Button slot="append" icon="ios-search"></Button>
+        <Button slot="append" icon="ios-search"></Button>
       </Input>
       </Col>
     </Row>
-    <!-- <Alert class="alert-info" show-icon>已选择当前页10项。
-        <span>选择全部{{this.total}}项</span>
-      </Alert> -->
-    <!-- <Alert class="alert-info">
+    <Alert class="alert-info" v-show="selection.length !== 0" v-if="selection.length < this.pageSize">
       <Row>
         <Col span="23">
-        <Tag closable color="blue">标签一</Tag>
+        <Tag @on-close="closeTag" v-for="select in selection" :key="select.truename" :name="select.truename" closable color="blue">{{select.truename}}</Tag>
         </Col>
         <Col span="1">
-        <span>清空</span>
+        <span class="clear" @click="selection = []">清空</span>
         </Col>
       </Row>
-    </Alert> -->
-    <Table ref="table" :data="tableData" :columns="columns" size="small" border highlight-row stripe>
+    </Alert>
+    <Alert class="alert-info" v-else show-icon>已选择当前页{{this.pageSize}}项。
+      <span>选择全部{{this.total}}项</span>
+    </Alert>
+    <Table ref="table" :data="tableData" :columns="columns" @on-selection-change="selectChange" size="small" border highlight-row stripe>
     </Table>
     <Page :total="total" :current="current" @on-change="changePage" @on-page-size-change="changeSize" size="small" placement="top" show-total show-sizer show-elevator></Page>
     </Col>
@@ -46,10 +46,14 @@
 </template>
 
 <script>
-import { fetchOrganize, fetchUserList } from '@/api/manager/user';
+import { fetchOrganize, fetchUserList, deleteUsers } from '@/api/manager/user';
+import SvgIcon from '@/components/Icon';
 
 export default {
   name: 'UserManager',
+  components: {
+    SvgIcon
+  },
   data() {
     return {
       filterText: '',
@@ -60,6 +64,7 @@ export default {
       },
       keyword: '',
       tableData: [],
+      selection: [],
       columns: [{
         type: 'selection',
         width: 60,
@@ -90,11 +95,10 @@ export default {
         title: '操作',
         key: 'action',
         align: 'center',
-        // eslint-disable-next-line
         render: (h, params) =>
           <div>
             <i-button type="text">修改</i-button>
-            <poptip title="您确定要删除这条内容吗？" width="200" placement="top-end" confirm onOnok={this.ok.bind(this, params.index)}>
+            <poptip title="您确定要删除这条内容吗？" width="200" placement="top-end" confirm onOn-ok={() => this.ok(params)}>
               <i-button type="text">删除</i-button>
             </poptip>
           </div>
@@ -105,16 +109,15 @@ export default {
       pageSize: 10
     };
   },
-  watch: {
-    filterText(val) {
-      this.$refs.tree.filter(val);
-    }
-  },
   methods: {
     init() {
       fetchOrganize().then(response => {
         this.treeData = response.data;
       });
+    },
+    renderTree(h, { node }) {
+      const iconClass = node.level === 1 ? 'zhengfu' : 'danwei';
+      return <span><SvgIcon iconClass={iconClass} size={22} style={{ marginRight: '8px' }}></SvgIcon>{node.data.name}</span>;
     },
     clickTree(node) {
       fetchUserList(this.keyword, node.id, this.current, this.pageSize).then(response => {
@@ -123,16 +126,34 @@ export default {
     },
     filterNode(value, data) {
       if (!value) return true;
-      return data.label.indexOf(value) !== -1;
+      return data.name.indexOf(value) !== -1;
     },
-    ok() {
-      alert(1);
+    selectChange(selection) {
+      this.selection = selection;
+    },
+    closeTag(event, truename) {
+      this.selection = this.selection.filter(val => val.truename !== truename);
+    },
+    ok(params) {
+      if (this.$store.getters.orgId !== params.row.orgid) {
+        this.$Message.success('您当前没有该权限！');
+      } else {
+        deleteUsers([params.row.id]).then(() => {
+          this.tableData.splice(params.index, 1);
+          this.$Message.success('删除成功！');
+        });
+      }
     },
     changePage(pageIndex) {
       this.current = pageIndex;
     },
     changeSize(pageSize) {
       this.pageSize = pageSize;
+    }
+  },
+  watch: {
+    filterText(val) {
+      this.$refs.tree.filter(val);
     }
   },
   created() {
@@ -157,6 +178,8 @@ export default {
     span {
       color: #2d8cf0;
       cursor: pointer;
+      line-height: 26px;
+      float: right;
     }
   }
   .ivu-page {

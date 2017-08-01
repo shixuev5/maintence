@@ -14,13 +14,17 @@ export default {
     },
     size: {
       type: Number
+    },
+    color: {
+      type: String
     }
   },
   data() {
     return {
       styleObj: {
         width: `${this.size}px`,
-        height: `${this.size}px`
+        height: `${this.size}px`,
+        fill: this.color || 'currentColor'
       }
     };
   },
