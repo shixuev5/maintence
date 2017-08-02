@@ -94,7 +94,6 @@ export default {
         title: '创建时间',
         key: 'servicelogdate'
       }],
-      tableHeight: 0,
       total: 0,
       current: 1,
       pageSize: 10

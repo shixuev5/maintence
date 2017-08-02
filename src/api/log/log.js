@@ -53,6 +53,12 @@ function fetchHadoopLog(filter, pageIndex, pageSize = 10) {
   });
 }
 
+function fetchHadoopNode() {
+  return fetch.post(`${config.maintence}hadooplog/querynodes`, {}, {
+    description: 'Hadoop节点查询'
+  });
+}
+
 function downloadHadoopLog(fileds, filter) {
   fetch.post(`${config.maintence}hadooplog/export`, { fileds, ...filter })
     .then(response => window.open(`${config.maintence}download/excel/${response.data}.xls`));
@@ -70,6 +76,12 @@ function fetchErrorLog(filter, pageIndex, pageSize) {
   });
 }
 
+function fetchErrorType() {
+  return fetch.post(`${config.maintence}errorcode/type/findall`, {}, {
+    description: '错误类别查询'
+  });
+}
+
 function downloadErrorLog(fileds, filter) {
   fetch.post(`${config.maintence}errorcode/log/export`, { fileds, ...filter })
     .then(response => window.open(`${config.maintence}download/excel/${response.data}.xls`));
@@ -83,7 +95,9 @@ export {
   fetchPlatformLog,
   downloadPlatformLog,
   fetchHadoopLog,
+  fetchHadoopNode,
   downloadHadoopLog,
   fetchErrorLog,
+  fetchErrorType,
   downloadErrorLog
 };

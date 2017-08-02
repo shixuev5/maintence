@@ -17,7 +17,7 @@ fetch.interceptors.request.use(config => {
   LoadingBar.start();
   if (config.description) {
     config.headers.common['User-Operation-Info'] = encodeURIComponent(
-      `${store.getters.userId},${store.getters.token},${store.getters.currentPerm.id},${config.description},
+      `${store.getters.userId},${store.getters.userInfo.token},${store.getters.currentPerm.id},${config.description},
       ${store.getters.currentPerm.bpname},${store.getters.parentPerm.bpname}`
     );
   }

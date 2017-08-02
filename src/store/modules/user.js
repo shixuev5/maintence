@@ -10,7 +10,7 @@ const user = {
     userId: state => state.userInfo.id,
     userName: state => state.userInfo.name,
     orgId: state => state.userInfo.orgid,
-    user: state => state.userInfo,
+    userInfo: state => state.userInfo,
     token: state => state.token
   },
   mutations: {

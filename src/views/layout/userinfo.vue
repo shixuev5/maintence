@@ -1,23 +1,23 @@
 <template>
   <Dropdown class="person" placement="bottom-end">
     <div>
-      <img class="avatar" :src="user.photouri || '/static/img/default.png'" alt="头像">
-      <span class="user-name">{{user.truename || 'shixuev5'}}</span>
+      <img class="avatar" :src="userInfo.photouri || '/static/img/default.png'" alt="头像">
+      <span class="user-name">{{userInfo.truename || 'shixuev5'}}</span>
     </div>
     <Dropdown-menu slot="list">
       <header>用户信息</header>
       <Row class="content">
         <Col class="left" span="10">
         <div class="edit-avatar">
-          <img :src="user.photouri || '/static/img/default.png'" alt="头像">
+          <img :src="userInfo.photouri || '/static/img/default.png'" alt="头像">
           <div class="avatar-cover" @click="avatarModal = true">
             <Icon type="edit" size="20" color="#fff"></Icon>
           </div>
         </div>
         </Col>
         <Col class="right" span="14">
-        <div>组织：{{user.orgname}}</div>
-        <div>岗位：{{user.truename}}</div>
+        <div>组织：{{userInfo.orgname}}</div>
+        <div>岗位：{{userInfo.truename}}</div>
         </Col>
       </Row>
       <footer>
@@ -109,7 +109,7 @@ export default {
           {
             validator(rule, value, callback) {
               const errors = [];
-              if (md5(value) !== store.getters.user.password) {
+              if (md5(value) !== store.getters.userInfo.password) {
                 errors.push(new Error('与原密码不匹配！'));
               }
               callback(errors);
@@ -126,8 +126,8 @@ export default {
     };
   },
   computed: {
-    user() {
-      return this.$store.getters.user;
+    userInfo() {
+      return this.$store.getters.userInfo;
     }
   },
   methods: {

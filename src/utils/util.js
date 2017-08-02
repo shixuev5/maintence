@@ -13,6 +13,20 @@ function filterRoutes(permsId, routes) {
   return routes;
 }
 
+function cascaderTransform(data, {value = 'value', label = 'label'}) {
+  if(typeOf(data) !== 'array') return; 
+  let arr = [];
+  for(let i of data) {
+    if(typeOf(i.children) === 'array' && i.children.length > 0) {
+      const children = cascaderTransform(i.children, {value, label});
+      arr.push({value: i[value], label: i[label], children});
+    }else {
+      arr.push({value: i[value], label: i[label]});
+    }
+  }
+  return arr;
+}
+
 function getStyle(el, styleName = undefined) {
   if (!el) return false;
   if (!styleName) {
@@ -73,6 +87,7 @@ function deepCopy(data) {
 
 export {
   filterRoutes,
+  cascaderTransform,
   getStyle,
   debounce,
   typeOf,

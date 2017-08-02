@@ -4,7 +4,7 @@
       <Col span="21">
       <Form ref="formInline" :model="form" :label-width="100" inline>
         <Form-item prop="date" label="日志时间：">
-          <Date-picker v-model="form.date" type="date" :options="dateOption" placeholder="选择日期" style="width: 200px"></Date-picker>
+          <Date-picker v-model="form.date" type="date" format="yyyy年M月d日" :options="dateOption" placeholder="选择日期" style="width: 200px"></Date-picker>
         </Form-item>
         <Form-item prop="statuscode" label="服务运行状态：">
           <Select v-model="form.statuscode" clearable style="width:200px">
@@ -137,7 +137,6 @@ export default {
         align: 'center',
         render: (h, params) => <i-button type="text" onClick={this.show.bind(this, params.index)}>查看</i-button>
       }],
-      tableHeight: 0,
       total: 0,
       current: 1,
       pageSize: 10
@@ -158,7 +157,7 @@ export default {
           original: false,
           columns: this.columns,
           data: response.data.dataSource.map(val => {
-            val.date = filters.formatDate(val.logdate);
+            val.date = filters.formatDate(val.date);
             return val;
           })
         });
