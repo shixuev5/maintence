@@ -1,12 +1,12 @@
 <template>
   <Dropdown class="message">
-    <Badge :count="totleMessage" overflow-count="99">
+    <Badge :count="unReadMessage.length" overflow-count="99">
       <Icon type="ios-bell-outline" size="30" color="#fff"></Icon>
     </Badge>
     <Dropdown-menu slot="list">
       <header>站内消息</header>
        <div v-bar> 
-        <ul class="content-wrap" v-if="totleMessage !== 0">
+        <ul class="content-wrap" v-if="unReadMessage.length !== 0">
           <li v-for="message in unReadMessage" :key="message.id">
             <router-link class="title" :to="{path: '/securitymenu/messagecenter/messagecenter001'}">{{ message.title }}</router-link>
             <span class="time">{{ message.createTime | formatDate}}</span>
@@ -22,16 +22,12 @@
   </Dropdown>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   name: 'Msg',
-  data() {
-    return {
-    };
-  },
   computed: {
-    ...mapGetters(['unReadMessage', 'totleMessage'])
+    unReadMessage() {
+      return this.$store.getters.unReadMessage;
+    }
   },
   created() {
     this.$store.dispatch('fetchMsg');

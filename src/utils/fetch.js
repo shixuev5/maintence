@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import store from '@/store';
+import store from '@/store';
 import LoadingBar from 'iview/src/components/loading-bar';
 import Message from 'iview/src/components/message';
 
@@ -15,12 +15,12 @@ const fetch = axios.create({
 
 fetch.interceptors.request.use(config => {
   LoadingBar.start();
-  // if (config.description) {
-  //   config.headers.common['User-Operation-Info'] =
-  // encodeURIComponent(`${store.getters.userId},${store.getters.token},
-  // ${store.getters.currentPerm.id},${config.description},${store.getters.currentPerm.bpname},
-  // ${store.getters.parentPerm.bpname}`);
-  // }
+  if (config.description) {
+    config.headers.common['User-Operation-Info'] = encodeURIComponent(
+      `${store.getters.userId},${store.getters.token},${store.getters.currentPerm.id},${config.description},
+      ${store.getters.currentPerm.bpname},${store.getters.parentPerm.bpname}`
+    );
+  }
   return config;
 }, error => {
   LoadingBar.error();

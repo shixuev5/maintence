@@ -1,18 +1,19 @@
-import { fetchMessage } from '@/api/login/message';
+import {
+  fetchMessage
+} from '@/api/login/message';
 import io from 'socket.io-client';
 import config from '@/config';
-// import Notice from 'iview/src/components/notice';
+import Notice from 'iview/src/components/notice';
 
 const app = {
   state: {
     menuIsOpen: true,
-    unReadMessage: [],
-    totleMessage: 0
+    unReadMessage: []
   },
   getters: {
     menuIsOpen: state => state.menuIsOpen,
     unReadMessage: state => state.unReadMessage,
-    totleMessage: state => state.totleMessage
+    totleMessage: state => state.unReadMessage.length
   },
   mutations: {
     TOGGLE_MENU(state) {
@@ -20,9 +21,6 @@ const app = {
     },
     SET_UNREADMSG(state, unReadMsg) {
       state.unReadMessage = unReadMsg;
-    },
-    SET_TOTALMSG(state, totalMsg) {
-      state.totleMessage = totalMsg;
     }
   },
   actions: {
@@ -36,7 +34,6 @@ const app = {
           receiveId: getters.userName
         }, 1).then(response => {
           commit('SET_UNREADMSG', response.data.dataSource);
-          commit('SET_TOTALMSG', response.data.pageInfo.totalCount);
           resolve();
         });
       });
@@ -49,21 +46,20 @@ const app = {
           userid: getters.userName
         }
       });
-      socket.on('connect', () => {
-        console.log('socket connect!');
+      socket.on('reconnect_attempt', () => {
+        socket.io.opts.query = {
+          userid: getters.userName
+        };
       });
-      socket.on('message', data => {
-        console.log(data);
-        // Notice.info({
-        //   title: data.msgtitle,
-        //   desc: data.msgcontent,
-        //   onClose() {
+      socket.on('notification', data => {
+        const noticeInfo = JSON.parse(data);
+        Notice.info({
+          title: noticeInfo.title,
+          desc: noticeInfo.content,
+          onClose() {
 
-        //   }
-        // });
-      });
-      socket.on('disconnect', () => {
-        console.log('socket disconnect!');
+          }
+        });
       });
     }
   }

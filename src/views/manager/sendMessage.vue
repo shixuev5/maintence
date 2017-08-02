@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="root">
     <Form :model="form" label-position="top">
       <Form-item label="收件人：">
         <Select v-model="form.receiveId" multiple filterable remote :remote-method="remoteMethod" :loading="receiverLoading">
@@ -51,6 +51,7 @@ export default {
       this.sendLoading = true;
       sendMessage(receiveId, this.form.title, this.content).then(() => {
         this.sendLoading = false;
+        this.$store.dispatch('fetchMsg');
       });
     }
   },
@@ -58,13 +59,28 @@ export default {
     pell.init({
       element: document.getElementById('pell'),
       actions: [
-        'bold',
-        { name: 'italic', icon: '&#9786;', title: 'Zitalic' },
-        'underline',
+        {
+          name: 'bold',
+          title: '粗体'
+        },
+        {
+          name: 'underline',
+          title: '下划线'
+        },
         {
           name: 'italic',
+          title: '斜体',
           result: () => window.pell.exec('italic')
         }
+        // 'Strike-through',
+        // 'Heading 1',
+        // 'Heading 2',
+        // 'Paragraph',
+        // 'Quote',
+        // 'Ordered List',
+        // 'Unordered List',
+        // 'Code',
+        // 'Horizontal Rule'
       ],
       classes: {
         actionbar: 'pell-actionbar',
@@ -76,14 +92,38 @@ export default {
         this.content = html;
       }
     });
+    this.remoteMethod();
   }
 };
 </script>
 <style lang="less" scoped>
-#pell {
-  height: 400px;
+#root {
+  height: 100%;
 }
+
+#pell {
+  height: calc(~"100% - 240px");
+
+  &>:first-child {
+    border-bottom: none !important;
+  }
+
+  &>:last-child {
+    height: calc(~"100% - 30px");
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 4px;
+    transition: all .3s;
+
+    &:focus {
+      border-color: #57a3f3;
+      box-shadow: 0 0 0 2px rgba(45, 140, 240, .2);
+    }
+  }
+}
+
 .footer {
+  margin-top: 24px;
   text-align: center;
 }
 </style>

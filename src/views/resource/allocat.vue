@@ -1,6 +1,6 @@
 <template>
   <Tabs @on-click="tabClick">
-    <Tab-pane label="云盘资源" icon="social-apple">
+    <Tab-pane :label="renderLabel.bind(this, 0)">
       <Card shadow dis-hover>
         <Row>
           <Col span="14">
@@ -12,7 +12,7 @@
         </Row>
       </Card>
     </Tab-pane>
-    <Tab-pane label="内存资源" icon="social-windows">
+    <Tab-pane :label="renderLabel.bind(this, 1)">
       <keep-alive>
         <Card shadow dis-hover>
           <Row>
@@ -26,7 +26,7 @@
         </Card>
       </keep-alive>
     </Tab-pane>
-    <Tab-pane label="CPU资源" icon="social-tux">
+    <Tab-pane :label="renderLabel.bind(this, 2)">
       <keep-alive>
         <Card shadow dis-hover>
           <Row>
@@ -44,12 +44,14 @@
 </template>
 <script>
 import Stack from '@/components/Stack';
+import SvgIcon from '@/components/Icon';
 // import { viewResource } from '@/api/resource/resource';
 
 export default {
   name: 'ResourceAllocat',
   components: {
-    Stack
+    Stack,
+    SvgIcon
   },
   data() {
     return {
@@ -60,6 +62,21 @@ export default {
   methods: {
     tabClick(name) {
       this.tabName = name;
+    },
+    renderLabel(index) {
+      // eslint-disable-next-line
+      let iconClass, labelName;
+      if (index === 0) {
+        iconClass = 'yunpan';
+        labelName = '云盘资源';
+      } else if (index === 1) {
+        iconClass = '-neicun';
+        labelName = '内存资源';
+      } else {
+        iconClass = 'cpu';
+        labelName = 'CPU资源';
+      }
+      return <div><SvgIcon iconClass={iconClass} size="18" style={{ marginRight: '8px' }}></SvgIcon>{labelName}</div>;
     }
     // fetchResourceInfo() {
     //   viewResource().then((response) => {
