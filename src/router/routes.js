@@ -135,6 +135,7 @@ export const asyncRoutes = [{
     path: '/securitymenu/groupmanage',
     name: '群组管理',
     component: Wrap,
+    redirect: '/securitymenu/groupmanage/groupmanage001',
     children: [{
       path: 'groupmanage001',
       component: OrganizeManager,
@@ -152,6 +153,7 @@ export const asyncRoutes = [{
     path: '/securitymenu/rightmanage',
     name: '权限管理',
     component: Wrap,
+    redirect: '/securitymenu/rightmanage/rightmanage001',
     children: [{
       path: 'rightmanage001',
       component: ResourceAllocat,
@@ -169,6 +171,7 @@ export const asyncRoutes = [{
     path: '/securitymenu/messagecenter',
     name: '消息管理',
     component: Wrap,
+    redirect: '/securitymenu/messagecenter/messagecenter001',
     children: [{
       path: 'messagecenter001',
       component: MessageCenter,
@@ -186,6 +189,7 @@ export const asyncRoutes = [{
     path: '/securitymenu/antispam',
     name: '反垃圾管理',
     component: Wrap,
+    redirect: '/securitymenu/antispam/antispam001',
     children: [{
       path: 'antispam001',
       component: BlackList,
@@ -284,6 +288,7 @@ export const asyncRoutes = [{
     path: '/platformmonitormenu/hadoopmonitor',
     name: '分布式平台管理',
     component: Wrap,
+    redirect: '/platformmonitormenu/hadoopmonitor/HadoopMonitor001',
     children: [{
       path: 'HadoopMonitor001',
       component: HdfsMonitor,
@@ -321,6 +326,7 @@ export const asyncRoutes = [{
     path: '/systemmanagemenu/alarmconfig',
     name: '异常报警配置',
     component: Wrap,
+    redirect: '/systemmanagemenu/alarmconfig/alarmconfig001',
     children: [{
       path: 'alarmconfig001',
       component: AlarmRule,

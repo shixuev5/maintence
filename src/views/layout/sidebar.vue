@@ -10,6 +10,7 @@
         <template slot="title">
           <SideBarItem :route="routes" :menuIsOpen="menuIsOpen" :iconSize="iconSize"></SideBarItem>
         </template>
+        <div class="menu-wrap">
         <Menu-item v-if="!route.children" v-for="route in routes.children" :key="route.name" :name="route.name">
           <SideBarItem :route="route" :menuIsOpen="menuIsOpen" :iconSize="itemIconSize"></SideBarItem>
         </Menu-item>
@@ -18,6 +19,7 @@
             <SideBarItem :route="child" :menuIsOpen="menuIsOpen" :iconSize="itemIconSize"></SideBarItem>
           </Menu-item>
         </Menu-group>
+        </div>
       </Submenu>
     </Menu>
   </div>
@@ -82,6 +84,11 @@ export default {
     display: inline-block;
   }
 
+  .menu-wrap {
+    // max-height: calc(~"100vh - 458px");
+    overflow-y: auto;
+  }
+
   .route-name {
     margin-left: 6px;
   }
@@ -122,11 +129,15 @@ export default {
   text-align: center;
   .ivu-btn-text {
     color: #BDBDBD;
+    transition: all .3s;
+
+    &:hover {
+      color: #57a3f3;
+    }
   }
 }
 
 .vertical-button {
-  transition: transform .3s;
   transform: rotate(90deg);
 }
 </style>

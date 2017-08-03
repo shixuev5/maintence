@@ -108,13 +108,13 @@ export default {
           let color;
           switch (params.row.level) {
             case 1:
-              level = '一般'; color = '#2d8cf0'; break;
+              level = '一般'; color = 'green'; break;
             case 2:
-              level = '严重'; color = '#ff9900'; break;
+              level = '严重'; color = 'yellow'; break;
             case 3:
-              level = '紧急'; color = '#ed3f14'; break;
+              level = '紧急'; color = 'red'; break;
             default:
-              level = '信息'; color = '#5cadff';
+              level = '信息'; color = 'blue';
           }
           return <tag type="dot" color={color}>{level}</tag>;
         },
