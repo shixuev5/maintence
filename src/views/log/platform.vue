@@ -135,7 +135,7 @@ export default {
         title: '操作',
         key: 'action',
         align: 'center',
-        render: (h, params) => <i-button type="text" onClick={this.show.bind(this, params.index)}>查看</i-button>
+        render: (h, params) => <i-button type="text" onClick={() => { this.show(params.index); }}>查看</i-button>
       }],
       total: 0,
       current: 1,

@@ -2,7 +2,7 @@
   <div>
     <Menu theme="dark" mode="horizontal">
       <div class="layout-logo">
-        <img src="/static/img/title.png" alt="logo">
+        <img :src="logoUrl" alt="logo">
       </div>
       <User></User>
       <Msg></Msg>
@@ -19,6 +19,7 @@
   </div>
 </template>
 <script>
+import logoUrl from '@/assets/title.png';
 import SideBar from './sidebar';
 import BreadCrumb from './breadcrumb';
 import Msg from './message';
@@ -31,6 +32,11 @@ export default {
     BreadCrumb,
     Msg,
     User
+  },
+  data() {
+    return {
+      logoUrl
+    };
   },
   computed: {
     iconSize() {

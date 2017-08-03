@@ -1,6 +1,6 @@
 <template>
-  <div id="login">
-    <div class="form">
+  <div id="login" :style="{ backgroundImage: loginBg }">
+    <div class="form" :style="{ backgroundImage: formBg }">
       <Form ref="form" :model="form" :rules="rule" :label-width="80" @keydown.enter.native="handleLogin('form')">
         <Form-item prop="name">
           <Input type="text" v-model="form.name" size="large" placeholder="请输入用户名">
@@ -21,10 +21,15 @@
 </template>
 
 <script>
+import loginBg from '@/assets/login_bg.jpg';
+import formBg from '@/assets/login.png';
+
 export default {
   name: 'Login',
   data() {
     return {
+      loginBg: `url(${loginBg})`,
+      formBg: `url(${formBg})`,
       form: {
         name: '',
         password: ''
@@ -67,21 +72,19 @@ export default {
 </script>
 <style lang="less" scoped>
 #login {
-    height: 100vh;
-    width: 100vw;
-    background: url('/static/img/login_bg.jpg') no-repeat;
+  height: 100vh;
+  width: 100vw;
 
-    .form {
-        position: absolute;
-        top: 200px;
-        right:160px;
-        height: 520px;
-        width: 550px;
-        background: url('/static/img/login.png') no-repeat;
-    }
-    .ivu-form {
-        margin:240px 60px 0 120px;
-    }
+  .form {
+    position: absolute;
+    top: 200px;
+    right: 160px;
+    height: 520px;
+    width: 550px;
+  }
+  .ivu-form {
+    margin: 240px 60px 0 120px;
+  }
 }
 </style>
 

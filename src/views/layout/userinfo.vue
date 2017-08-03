@@ -1,7 +1,7 @@
 <template>
   <Dropdown class="person" placement="bottom-end">
     <div>
-      <img class="avatar" :src="userInfo.photouri || '/static/img/default.png'" alt="头像">
+      <img class="avatar" :src="userInfo.photouri || avatarUrl" alt="头像">
       <span class="user-name">{{userInfo.truename || 'shixuev5'}}</span>
     </div>
     <Dropdown-menu slot="list">
@@ -9,15 +9,15 @@
       <Row class="content">
         <Col class="left" span="10">
         <div class="edit-avatar">
-          <img :src="userInfo.photouri || '/static/img/default.png'" alt="头像">
+          <img :src="userInfo.photouri || avatarUrl" alt="头像">
           <div class="avatar-cover" @click="avatarModal = true">
             <Icon type="edit" size="20" color="#fff"></Icon>
           </div>
         </div>
         </Col>
         <Col class="right" span="14">
-        <div>组织：{{userInfo.orgname}}</div>
-        <div>岗位：{{userInfo.truename}}</div>
+          <div>组织：{{userInfo.orgname}}</div>
+          <div>岗位：{{userInfo.truename}}</div>
         </Col>
       </Row>
       <footer>
@@ -67,6 +67,7 @@
 
 <script>
 import { savePasswd, saveAvatar } from '@/api/login/userInfo';
+import avatarUrl from '@/assets/default.png';
 import store from '@/store';
 import config from '@/config';
 import md5 from 'js-md5';
@@ -95,6 +96,7 @@ export default {
       }
     };
     return {
+      avatarUrl,
       avatarModal: false,
       pwdModal: false,
       loading: false,
@@ -207,7 +209,7 @@ export default {
     margin-left: 10px;
   }
   .ivu-select-dropdown {
-    right: 5px !important;
+    right: 6px !important;
   }
 
   .ivu-dropdown-menu {

@@ -143,7 +143,7 @@ export default {
         title: '操作',
         key: 'action',
         align: 'center',
-        render: (h, params) => <i-button type="text" onClick={this.eidtRow.bind(this, params.row)}>编辑</i-button>
+        render: (h, params) => <i-button type="text" onClick={() => { this.eidtRow(params.row); }}>编辑</i-button>
       }],
       disabled: true,
       isEdit: false,
