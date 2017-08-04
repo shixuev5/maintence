@@ -9,7 +9,7 @@ function fetchErrorCode(filter, pageIndex, pageSize = 10) {
 }
 
 function updateErrorCode(data) {
-  return fetch.post(`${config.maintence}errorcode/update;`, data, {
+  return fetch.post(`${config.maintence}errorcode/update`, data, {
     description: '错误代码更新'
   });
 }

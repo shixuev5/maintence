@@ -1,11 +1,11 @@
 <template>
   <div>
-    缓存恢复
+    查看消息
   </div>
 </template>
 <script>
 export default {
-  name: 'CacheReply',
+  name: 'ViewMessage',
   data() {
     return {
 
@@ -13,3 +13,7 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+
+</style>

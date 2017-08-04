@@ -2,21 +2,11 @@ import fetch from '@/utils/fetch';
 import config from '@/config';
 import store from '@/store';
 
-function sendMessage(msg) {
-  const data = {
-    typeId: '00000000-0000-0000-0000-000000000000',
-    sentType: '1',
-    sendId: store.getters.userId,
-    ...msg
-  };
-  return fetch.post(`${config.message}messagebusiness/sendmessage`, data, {
-    description: '发送站内信'
-  });
-}
 
 function fetchMessage(filter, pageIndex, pageSize = 10) {
   return fetch.post(`${config.message}messagebusiness/findpagelist`, {
     objCondition: {
+      receiveId: store.getters.userName,
       ...filter
     },
     pageIndex,
@@ -38,7 +28,6 @@ function deleteMessage(ids) {
 }
 
 export {
-  sendMessage,
   fetchMessage,
   markRead,
   deleteMessage

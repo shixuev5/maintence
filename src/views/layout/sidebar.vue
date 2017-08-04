@@ -112,6 +112,9 @@ export default {
   &.side-bar {
     width: 60px;
   }
+  .menu-wrap {
+    overflow-y: inherit;
+  }
   .route-name,
   .ivu-icon-ios-arrow-down,
   .ivu-menu-item-group-title {

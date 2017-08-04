@@ -21,7 +21,7 @@
       </Col>
       <Col offset="6" span="6">
       <Input :value="keyword" placeholder="请输入登录名、姓名、岗位名...">
-        <Button slot="append" icon="ios-search"></Button>
+      <Button slot="append" icon="ios-search"></Button>
       </Input>
       </Col>
     </Row>
@@ -47,7 +47,11 @@
 
 <script>
 import { fetchOrganize, fetchUserList, deleteUsers } from '@/api/manager/user';
+import { fetchDictionaryByType } from '@/api/sysmanage/dictionary';
+import axios from 'axios';
 import SvgIcon from '@/components/Icon';
+
+const dictionaryType = ['民族类型', '教育程度', '人员类别', '政治面貌', '性别'];
 
 export default {
   name: 'UserManager',
@@ -56,6 +60,7 @@ export default {
   },
   data() {
     return {
+      dictionary: [],
       filterText: '',
       treeData: [],
       defaultProps: {
@@ -83,14 +88,18 @@ export default {
         key: 'flag',
         align: 'center',
         render: (h, params) => {
-          const state = params.flags === 1 ? '有效' : '无效';
-          const color = params.flags === 1 ? 'green' : 'red';
+          const state = params.row.flag === 1 ? '有效' : '无效';
+          const color = params.row.flag === 1 ? 'green' : 'red';
           return <tag type="dot" color={color}>{state}</tag>;
         }
       },
       {
-        title: '人员类型',
-        key: 'type'
+        title: '人员类别',
+        key: 'type',
+        render: (h, params) => {
+          const result = this.dictionary.filter(val => val.type === '人员类别' && `${params.row.type}` === val.code);
+          return result[0].data;
+        }
       }, {
         title: '操作',
         key: 'action',
@@ -110,11 +119,6 @@ export default {
     };
   },
   methods: {
-    init() {
-      fetchOrganize().then(response => {
-        this.treeData = response.data;
-      });
-    },
     renderTree(h, { node }) {
       const iconClass = node.level === 1 ? 'zhengfu' : 'danwei';
       return <span><SvgIcon iconClass={iconClass} size={22} style={{ marginRight: '8px' }}></SvgIcon>{node.data.name}</span>;
@@ -157,7 +161,11 @@ export default {
     }
   },
   created() {
-    this.init();
+    axios.all([fetchOrganize(), fetchDictionaryByType(dictionaryType)])
+      .then(axios.spread((organize, dictionary) => {
+        this.treeData = organize.data;
+        this.dictionary = dictionary.data;
+      }));
   }
 };
 </script>

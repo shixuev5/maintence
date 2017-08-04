@@ -10,18 +10,25 @@ function fetchOrganize() {
 }
 
 function fetchUserList(keyword = '', orgid = '', pageIndex, pageSize) {
-  return fetch.post(`${config.usercenter}user/getuserbycondition/${pageIndex}/${pageSize}`, {
-    keyword,
-    orgid
+  return fetch.post(`${config.usercenter}user/getuserbycondition/${pageIndex}/${pageSize}`, { keyword, orgid }, {
+    description: '查询用户列表'
   });
 }
 
-/**
- * 删除用户
- * @param {Array} ids 删除的用户id数组
- */
-function deleteUsers(ids) {
-  return fetch.post(`${config.usercenter}user/deleteuser`, JSON.stringify(ids), {
+function addUser(data) {
+  return fetch.post(`${config.usercenter}user/insertex`, data, {
+    description: '新增用户'
+  });
+}
+
+function updateUser(data) {
+  return fetch.post(`${config.usercenter}user/updateex`, data, {
+    description: '更新用户信息'
+  });
+}
+
+function deleteUsers(idsArray) {
+  return fetch.post(`${config.usercenter}user/deleteuser`, idsArray, {
     description: '删除用户'
   });
 }
@@ -29,5 +36,7 @@ function deleteUsers(ids) {
 export {
   fetchOrganize,
   fetchUserList,
+  addUser,
+  updateUser,
   deleteUsers
 };

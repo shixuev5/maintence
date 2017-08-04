@@ -1,6 +1,6 @@
 import {
   fetchMessage
-} from '@/api/login/message';
+} from '@/api/manager/messageCenter';
 import io from 'socket.io-client';
 import config from '@/config';
 import Notice from 'iview/src/components/notice';
@@ -25,14 +25,12 @@ const app = {
   },
   actions: {
     fetchMsg({
-      commit,
-      getters
+      commit
     }) {
       return new Promise(resolve => {
         fetchMessage({
-          readState: 0,
-          receiveId: getters.userName
-        }, 1).then(response => {
+          readState: 0
+        }).then(response => {
           commit('SET_UNREADMSG', response.data.dataSource);
           resolve();
         });
