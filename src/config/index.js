@@ -1,5 +1,5 @@
-const baseUrl = 'http://192.168.1.176:8080/';
-// const baseUrl = 'http://gisserver.ngrok.cc/';
+// const baseUrl = 'http://192.168.1.176:8080/';
+const baseUrl = 'http://gisapi.ngrok.cc/';
 
 export default {
   env: `${baseUrl}development`,
@@ -8,5 +8,4 @@ export default {
   message: `${baseUrl}message-center/`,
   resource: `${baseUrl}resource/`,
   socket: baseUrl
-  // socket: 'http://gissocket.ngrok.cc'
 };

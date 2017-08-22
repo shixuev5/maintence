@@ -55,7 +55,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('connectSocket');
+    // this.$store.dispatch('connectSocket');
   }
 };
 </script>
