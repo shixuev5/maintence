@@ -136,11 +136,11 @@ export default {
       },
       {
         title: '错误分类类型',
-        key: 'type'
+        key: 'typeName'
       },
       {
         title: '错误信息',
-        key: 'info'
+        key: 'describe'
       },
       {
         title: '日志时间',

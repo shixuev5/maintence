@@ -1,4 +1,4 @@
-// const baseUrl = 'http://192.168.1.176:8080/';
+// const baseUrl = 'http://192.168.1.68:8080/';
 const baseUrl = 'http://gisapi.ngrok.cc/';
 
 export default {

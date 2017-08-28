@@ -65,7 +65,7 @@ function downloadHadoopLog(fileds, filter) {
 }
 
 function fetchErrorLog(filter, pageIndex, pageSize) {
-  return fetch.post(`${config.resource}serviceserrorlogview/findpagelist`, {
+  return fetch.post(`${config.maintence}serviceserrorlogview/findpagelist`, {
     pageIndex,
     pageSize,
     objCondition: {
